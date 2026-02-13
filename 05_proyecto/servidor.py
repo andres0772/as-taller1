@@ -21,8 +21,8 @@ print(f"se establecio conexion con {direccion}")
 cliente.send(f"palabra: {palabra_revelada} | Intentos: {intentos}".encode())
 
 while intentos > 0 and "_" in palabra_revelada:
-    letras = cliente.recv(1024).decode()
-
+    letras = cliente.recv(1024).decode().strip().lower()
+    print(f"Letra recibida de cliente: '{letras}'")
     # si la letra ya fue usada
     if letras in letras_usadas:
         cliente.send(
@@ -41,19 +41,21 @@ while intentos > 0 and "_" in palabra_revelada:
                 nueva += palabra_revelada[i]
         palabra_revelada = nueva
 
-    # gano
-    if "_" not in palabra_revelada:
-        cliente.send(f"has ganado la palabra era {palabras_secreta}".encode())
-        break
+        # gano
+        if "_" not in palabra_revelada:
+            cliente.send(f"has ganado la palabra era {palabras_secreta}".encode())
+            break
+        else:
+            cliente.send(f"correcto {palabra_revelada} | Intentos: {intentos}".encode())
+    # si la letra es incorrecta
     else:
-        cliente.send(f"correcto {palabra_revelada} | Intentos: {intentos}".encode())
-# si la letra es incorrecta
-else:
-    intentos -= 1
-    if intentos == 0:
-        cliente.send(f"has perdido la palabra era {palabras_secreta}".encode())
-    else:
-        cliente.send(f"incorrecto {palabra_revelada} | Intentos: {intentos}".encode())
+        intentos -= 1
+        if intentos == 0:
+            cliente.send(f"has perdido la palabra era {palabras_secreta}".encode())
+        else:
+            cliente.send(
+                f"incorrecto {palabra_revelada} | Intentos: {intentos}".encode()
+            )
 
 cliente.close()
 servidor.close()

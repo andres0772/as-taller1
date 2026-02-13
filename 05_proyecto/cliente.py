@@ -15,6 +15,6 @@ while True:
     respuesta = cliente.recv(1024).decode()
     print(respuesta)
 
-    if "ganaste" in respuesta or "perdiste" in respuesta:
+    if "ganado" in respuesta or "perdido" in respuesta:
         break
 cliente.close()
