@@ -7,7 +7,7 @@ HOST = "localhost"
 PORT = 8080
 
 # Preparar el juego
-palabras = ["GATO", "PERRO", "CASA"]
+palabras = ["GATO", "PERRO", "CASA"]  # de ejemplo
 palabra_secreta = random.choice(palabras)
 palabra_mostrar = "_" * len(palabra_secreta)
 intentos = 6

@@ -31,7 +31,7 @@ hilo = threading.Thread(target=recibir, daemon=True)
 hilo.start()
 
 # Enviar letras
-print("\n✨ ¡Empieza el juego!\n")
+print("\n¡Empieza el juego!\n")
 print("Tu letra: ", end="", flush=True)
 
 while True:
